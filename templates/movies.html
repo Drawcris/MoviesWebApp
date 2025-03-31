@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'new.css' %}">
+</head>
+<body>
+    {% if movies %}
+    <h1>There are {{ movies|length }} movies in the database.</h1>
+         {% for movie in movies %}
+         <p>{{ movie }}</p>
+         {% endfor %}
+         {% else %}
+    <h1>There are no movies in the database.</h1>
+    {% endif %}
+
+    <h2>Tescik</h2>
+
+
+</body>
+</html>
