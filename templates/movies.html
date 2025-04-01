@@ -8,17 +8,18 @@
     <link rel="stylesheet" href="{% static 'new.css' %}">
 </head>
 <body>
+    <a href="{% url 'create_movie' %}">Utwórz Film</a>
     {% if movies %}
     <h1>There are {{ movies|length }} movies in the database.</h1>
          {% for movie in movies %}
-         <p>{{ movie }}</p>
+         <h3>{{ movie.title }}</h3>
+         <p>{{ movie.description }}</p>
+         <a href="{% url 'update_movie' movie.id %}">Edytuj Film</a>
+         <a href="{% url 'delete_movie' movie.id %}">Usuń Film</a>
          {% endfor %}
          {% else %}
     <h1>There are no movies in the database.</h1>
     {% endif %}
-
-    <h2>Tescik</h2>
-
 
 </body>
 </html>
