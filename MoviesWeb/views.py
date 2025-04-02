@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import response
 from MoviesWeb.models import Movie
 from MoviesWeb.forms import MovieForm
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def all_movies(request):
     allObjectsInTable = Movie.objects.all()
     return  render(request, 'movies.html', {'movies': allObjectsInTable})
 
+@login_required()
 def create_movie(request):
     form = MovieForm(request.POST or None, request.FILES or None)
 
@@ -18,6 +18,7 @@ def create_movie(request):
 
     return render(request, 'create_movie.html', {'form': form})
 
+@login_required()
 def update_movie(request, id):
     movie = get_object_or_404(Movie, pk=id)
 
@@ -28,6 +29,7 @@ def update_movie(request, id):
 
     return render(request, 'create_movie.html', {'form': form})
 
+@login_required()
 def delete_movie(request, id):
     movie = get_object_or_404(Movie, pk=id)
 
