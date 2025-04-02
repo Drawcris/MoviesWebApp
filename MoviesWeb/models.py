@@ -9,6 +9,7 @@ class Movie(models.Model):
     premiere = models.DateField(blank=True, null=True)
     imdb_rating = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
     poster = models.ImageField(upload_to='movieposters', null = True, blank=True)
+    comments = models.TextField(blank=True, default="")
 
     def __str__(self):
         return self.title_with_a_year()

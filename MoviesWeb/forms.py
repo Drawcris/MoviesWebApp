@@ -8,6 +8,7 @@ class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = '__all__'
+        exclude = ['comments']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -54,3 +55,14 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+
+class CommentForm(forms.Form):
+    comment = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Dodaj komentarz',
+        }),
+        label='Twój komentarz',
+        max_length=500,
+        required=True
+    )
