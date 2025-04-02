@@ -1,7 +1,7 @@
 {% extends "main.html" %}
-{% load crispy_forms_tags %}
 
-{% block title %}Zaloguj się{% endblock %}
+{% block title %}Zarejestruj się{% endblock %}
+{% load crispy_forms_tags %}
 
 {% block page %}
 <div class="container mt-5">
@@ -9,20 +9,17 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header text-center bg-success text-white">
-                    <h3>Zaloguj się</h3>
+                    <h3>Zarejestruj się</h3>
                 </div>
                 <div class="card-body">
                     <form method="POST" class="form-group">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <hr>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-success btn-block mt-3">Zaloguj</button>
-                        </div>
+                        <button type="submit" class="btn btn-success btn-block mt-3">Zarejestruj</button>
                     </form>
                 </div>
                 <div class="card-footer text-center text-muted">
-                    Nie masz konta? <a href="{% url 'register' %}">Zarejestruj się</a>
+                    Już masz konto? <a href="{% url 'login' %}">Zaloguj się</a>
                 </div>
             </div>
         </div>

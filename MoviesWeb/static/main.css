@@ -1,0 +1,12 @@
+.movie-poster {
+    float: left;
+    margin-right: 15px;
+    max-width: 150px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.card-body {
+    display: block;
+    overflow: hidden;
+}

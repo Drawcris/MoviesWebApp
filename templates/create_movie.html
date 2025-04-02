@@ -1,15 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <form action="" method="post" enctype="multipart/form-data">
-        {%  csrf_token %}
-        {{ form }}
-        <button type="submit">Dodaj film</button>
-    </form>
-</body>
-</html>
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Dodaj film{% endblock %}
+
+{% block page %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3>🎬 Dodaj nowy film</h3>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-success btn-block mt-3">
+                            Dodaj film
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    Wypełnij wszystkie wymagane pola, aby dodać nowy film do bazy.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

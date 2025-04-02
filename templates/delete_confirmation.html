@@ -1,16 +1,31 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Czy na pewno chcesz usunąć {{ movie.title }} film?</h1>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Tak</button>
-    </form>
-    <button><a href="{% url 'all_movies' %}">Nie</a></button>
-</body>
-</html>
+{% extends "main.html" %}
+
+{% block title %}Usuń film{% endblock %}
+
+{% block page %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header text-center bg-danger text-white">
+                    <h3>Czy na pewno chcesz usunąć ten film?</h3>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4 p-3 bg-light border rounded">
+                        <h4 class="text-success">„{{ movie.title }}”</h4>
+                        <p><strong>Rok produkcji:</strong> {{ movie.release_year }}</p>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-lg mx-2">🗑️ Tak, usuń</button>
+                        <a href="{% url 'all_movies' %}" class="btn btn-secondary btn-lg mx-2">❌ Nie, wróć</a>
+                    </form>
+                </div>
+                <div class="card-footer text-center text-muted">
+                    Pamiętaj, że po usunięciu filmu nie będzie można przywrócić jego danych.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

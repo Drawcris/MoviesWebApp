@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from MoviesWeb.models import Movie
-from MoviesWeb.forms import MovieForm
+from MoviesWeb.forms import MovieForm, RegisterForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -39,3 +39,15 @@ def delete_movie(request, id):
 
 
     return render(request, 'delete_confirmation.html', {'movie': movie})
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+        return redirect('login')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
+
