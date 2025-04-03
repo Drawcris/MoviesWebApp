@@ -15,6 +15,7 @@
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
+                        {{ form_more_info|crispy }}
                         <button type="submit" class="btn btn-success btn-block mt-3">
                             Dodaj film
                         </button>

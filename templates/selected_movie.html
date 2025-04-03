@@ -38,7 +38,15 @@
             <ul class="list-group shadow">
                 <li class="list-group-item"><strong>Opis:</strong> {{ movie.description|default:"Brak opisu" }}</li>
                 <li class="list-group-item"><strong>Rok wydania:</strong> {{ movie.premiere }}</li>
-                <li class="list-group-item"><strong>Ocena IMDb:</strong> {{ movie.imdb_rating|default:"Brak oceny" }}</li>
+                <li class="list-group-item"><strong>Ocena Administracji:</strong> {{ movie.imdb_rating|default:"Brak oceny" }}</li>
+                <li class="list-group-item"><strong>Ocena Społeczności:</strong> {{ average_rating|default:"Brak oceny" }}</li>
+                <li class="list-group-item">Aktorzy:
+                    <ul class="list-group shadow">
+                        {% for actor in actors %}
+                            <li class="list-group-item">{{ actor.full_name}}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -46,36 +54,49 @@
     <hr class="my-5">
 
     <div class="bg-light p-4 rounded shadow-sm mb-4">
-        <h2 class="text-center mb-3">Komentarze</h2>
-        {% if comments %}
+        <h2 class="text-center mb-3">Oceny użytkowników</h2>
+        {% if ratings.exists %}
         <ul class="list-group">
-            {% for comment in comments %}
-                <li class="list-group-item text-wrap">{{ comment }}</li>
+            {% for rating in ratings %}
+                <li class="list-group-item text-wrap">
+                    <strong>Ocena:</strong> {{ rating.rating_point }} / 10
+                    <br>
+                    <small><strong>Recenzja:</strong> {{ rating.review }}</small>
+                </li>
             {% endfor %}
         </ul>
         {% else %}
-        <p class="text-center text-muted">Brak komentarzy dla tego filmu.</p>
+        <p class="text-center text-muted">Brak ocen dla tego filmu.</p>
         {% endif %}
     </div>
 
-    <div class="bg-light p-4 rounded shadow-sm">
-        <h2 class="text-center mb-3">Dodaj komentarz</h2>
-        <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                {{ form.comment.label_tag }}
-                {{ form.comment }}
-                {% if form.comment.errors %}
-                <div class="text-danger mt-1">
-                    {{ form.comment.errors }}
-                </div>
-                {% endif %}
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg">Dodaj komentarz</button>
-            </div>
-        </form>
-    </div>
+
+
+<div class="bg-light p-4 rounded shadow-sm mb-4">
+    <h2 class="text-center mb-4">Dodaj swoją recenzję</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.rating_point.label_tag }}
+            {{ form.rating_point }}
+            <div class="form-text">Podaj ocenę od 1 do 10.</div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.review.label_tag }}
+            {{ form.review }}
+            <div class="form-text">Podziel się swoją opinią na temat tego filmu.</div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-paper-plane"></i> Dodaj
+            </button>
+        </div>
+    </form>
+</div>
+
 
     <hr class="my-5">
 

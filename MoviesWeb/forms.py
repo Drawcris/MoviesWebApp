@@ -1,5 +1,5 @@
 from django import forms
-from .models import Movie
+from .models import Movie, MoreInfo, Rating
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ['title', 'release_year', 'description', 'premiere', 'imdb_rating', 'poster']
         exclude = ['comments']
         widgets = {
             'title': forms.TextInput(attrs={
@@ -49,12 +49,28 @@ class MovieForm(forms.ModelForm):
             'poster': 'Plakat filmu',
         }
 
+class MoreInfoForm(forms.ModelForm):
+    class Meta:
+        model = MoreInfo
+        fields = '__all__'
+
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['review', 'rating_point']
+        widgets = {
+            'review': forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Dodaj Recenzje',
+        })
+        }
 
 class CommentForm(forms.Form):
     comment = forms.CharField(
