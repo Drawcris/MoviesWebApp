@@ -37,6 +37,7 @@
         <div class="col-md-8">
             <ul class="list-group shadow">
                 <li class="list-group-item"><strong>Opis:</strong> {{ movie.description|default:"Brak opisu" }}</li>
+                <li class="list-group-item"><strong>Reżyser:</strong> {{ movie.director|default:"Brak danych" }}</li>
                 <li class="list-group-item"><strong>Rok wydania:</strong> {{ movie.premiere }}</li>
                 <li class="list-group-item"><strong>Ocena Administracji:</strong> {{ movie.imdb_rating|default:"Brak oceny" }}</li>
                 <li class="list-group-item"><strong>Ocena Społeczności:</strong> {{ average_rating|default:"Brak oceny" }}</li>

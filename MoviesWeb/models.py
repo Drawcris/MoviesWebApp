@@ -24,6 +24,7 @@ class MoreInfo(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=64, blank=False, unique=True)
     release_year = models.PositiveSmallIntegerField(default=2000)
+    director = models.CharField(max_length=32, blank=True, default="")
     description = models.TextField(blank=True, default="")
     premiere = models.DateField(blank=True, null=True)
     imdb_rating = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)

@@ -7,12 +7,16 @@ from django.contrib.auth.forms import UserCreationForm
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ['title', 'release_year', 'description', 'premiere', 'imdb_rating', 'poster']
+        fields = ['title', 'director', 'release_year', 'description', 'premiere', 'imdb_rating', 'poster']
         exclude = ['comments']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Wprowadź tytuł filmu',
+            }),
+            'director': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Wprowadź imię reżysera',
             }),
             'release_year': forms.NumberInput(attrs={
                 'class': 'form-control',
@@ -42,6 +46,7 @@ class MovieForm(forms.ModelForm):
         }
         labels = {
             'title': 'Tytuł filmu',
+            'director':'Reżyser',
             'release_year': 'Rok wydania',
             'description': 'Opis filmu',
             'premiere': 'Data premiery',
