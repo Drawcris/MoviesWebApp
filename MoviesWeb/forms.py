@@ -77,13 +77,3 @@ class RatingForm(forms.ModelForm):
         })
         }
 
-class CommentForm(forms.Form):
-    comment = forms.CharField(
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'placeholder': 'Dodaj komentarz',
-        }),
-        label='Twój komentarz',
-        max_length=500,
-        required=True
-    )

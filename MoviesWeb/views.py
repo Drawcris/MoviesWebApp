@@ -1,8 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from MoviesWeb.models import Movie, MoreInfo, Rating, Cast
+from MoviesWeb.models import Movie, Rating
+from django.contrib.auth.models import User
 from MoviesWeb.forms import MovieForm, RegisterForm, MoreInfo, MoreInfoForm, RatingForm
 from django.contrib.auth.decorators import login_required
 from statistics import mean
+from rest_framework import viewsets
+from MoviesWeb.serializers import UserSerializer, MovieSerializer
+
+
+class UserView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class MovieView(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
 
 
 
@@ -58,22 +70,32 @@ def delete_movie(request, id):
 
     return render(request, 'delete_confirmation.html', {'movie': movie})
 
-def selected_movie(request, id):
-    movie = get_object_or_404(Movie, pk=id)
+def get_movie_ratings(movie):
     ratings = Rating.objects.filter(movie=movie)
-    form = RatingForm(request.POST or None)
-    actors = movie.actors.filter(movies=movie)
-
     list_of_ratings = [rating.rating_point for rating in ratings]
-    if len(list_of_ratings) == 0:
+    if not list_of_ratings:
         list_of_ratings = [0]
     average_rating = mean(list_of_ratings)
+    return ratings, average_rating
 
+def handle_rating_form(request, movie):
+    form = RatingForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
         rating = form.save(commit=False)
         rating.movie = movie
         rating.save()
+        return form, True
+    return form, False
+
+def selected_movie(request, id):
+    movie = get_object_or_404(Movie, pk=id)
+    actors = movie.actors.filter(movies=movie)
+
+    ratings, average_rating = get_movie_ratings(movie)
+
+    form, form_was_submitted = handle_rating_form(request, movie)
+    if form_was_submitted:
         return redirect(selected_movie, id)
 
     return render(request, 'selected_movie.html', {
