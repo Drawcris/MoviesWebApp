@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from MoviesWeb.models import Movie
+from MoviesWeb.models import Movie, MoreInfo
 
 
 class UserSerializer(serializers.ModelSerializer):

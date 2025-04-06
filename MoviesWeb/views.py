@@ -17,6 +17,7 @@ class MovieView(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
 
 
+
 # Create your views here.
 def all_movies(request):
     allObjectsInTable = Movie.objects.all()
